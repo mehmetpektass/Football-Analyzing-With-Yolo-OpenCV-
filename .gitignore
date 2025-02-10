@@ -1,2 +1,4 @@
 footballAnalyzing/
 .DS_Store
+runs/
+yolo11m.pt
