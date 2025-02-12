@@ -5,3 +5,4 @@ yolo11m.pt
 .env
 training/football-players-detection-1/
 *.pt
+*.avi
