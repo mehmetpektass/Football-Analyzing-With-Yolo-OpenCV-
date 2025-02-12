@@ -1,0 +1,10 @@
+This directory contains trained model weights. However, to avoid exceeding GitHub's storage limits, these files have not been uploaded here.
+
+If you want to retrain the model, you can run the following command:
+!yolo task=detect mode=train model=yolo11m.pt data={dataset.location}/data.yaml epochs=100 imgsz=640
+
+After training is complete, two files will be generated: 'best.pt' and 'last.pt'.
+- best.pt  -> The model weights with the best accuracy.
+- last.pt  -> The model weights saved at the final epoch.
+
+These files can be stored on platforms like Google Drive.
