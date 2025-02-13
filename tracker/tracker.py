@@ -2,6 +2,8 @@ from ultralytics import YOLO
 import supervision as sv
 import pickle
 import os
+import cv2
+from utils import get_bbox_width, get_center_of_bbox
 
 class Tracker:
     def __init__(self, model_path):
@@ -78,11 +80,38 @@ class Tracker:
                     pickle.dump(tracks, f)
                 
             
-            print(detection_with_tracks)        
+            print(detection_with_tracks)    
+            
+            
+    def draw_ellipse(self, frame, bbox, color, track_id=None):
+        y2 = int(bbox[3])
+        x_center, _ = get_center_of_bbox(bbox)
+        width = get_bbox_width(bbox)
+
+        cv2.ellipse(
+            frame,
+            center=(x_center,y2),
+            axes=(int(width), int(0.35*width)),
+            angle=0.0,
+            startAngle=-45,
+            endAngle=235,
+            color = color,
+            thickness=2,
+            lineType=cv2.LINE_4
+        )
+         
             
     
     def draw_annotation(self, frames, tracks):
         output_video_frames = []
         
         for frame_num, frame in enumerate(frames):
-            pass
+            frame = frame.copy()
+            
+            player_dict = tracks["players"][frame_num]
+            ball_dict = tracks["ball"][frame_num]
+            referee_dict = tracks["referees"][frame_num]
+            
+            
+            for track_id, player in player_dict.items():
+                frame = self.draw_ellipse(frame, player["bbox"], (0,0,255), track_id)

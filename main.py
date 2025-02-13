@@ -1,4 +1,5 @@
 from utils import save_video, read_video
+from utils import get_bbox_width, get_center_of_box
 from tracker import Tracker
 
 def main():
