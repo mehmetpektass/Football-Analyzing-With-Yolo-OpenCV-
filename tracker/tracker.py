@@ -79,3 +79,10 @@ class Tracker:
                 
             
             print(detection_with_tracks)        
+            
+    
+    def draw_annotation(self, frames, tracks):
+        output_video_frames = []
+        
+        for frame_num, frame in enumerate(frames):
+            pass
