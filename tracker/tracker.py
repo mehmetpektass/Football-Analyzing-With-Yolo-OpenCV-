@@ -99,6 +99,14 @@ class Tracker:
             thickness=2,
             lineType=cv2.LINE_4
         )
+        
+        rectangle_width = 40
+        rectangle_height=20
+        x1_rect = x_center - rectangle_width//2
+        x2_rect = x_center + rectangle_width//2
+        y1_rect = (y2- rectangle_height//2) +15
+        y2_rect = (y2+ rectangle_height//2) +15
+        
         return frame
          
             
