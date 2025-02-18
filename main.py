@@ -17,7 +17,7 @@ def main():
 
 
    #Save the video
-   save_frames = save_video(output_video_frames, "output_videos/output_video6.avi")
+   save_frames = save_video(output_video_frames, "output_videos/output_video7.avi")
     
 if __name__ == "__main__":
     main()  
