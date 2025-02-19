@@ -1,5 +1,6 @@
 from utils import save_video, read_video
 from tracker import Tracker
+import cv2
 
 def main():
     
@@ -12,6 +13,16 @@ def main():
                              read_from_stub=True,
                              stub_path="stubs/track_stubs.pkl")
    
+   
+   
+   #Save a cropped image of a player
+   for _, player in tracks["players"][50].items():
+       bbox = player["bbox"]
+       frame = video_frames[50]
+    
+       cropped_image = frame[int(bbox[1]):int(bbox[3]), int(bbox[0]):int(bbox[2])]
+       
+       cv2.imwrite(f"output_videos/cropped_player_img.jpg", cropped_image)
    
    output_video_frames = tracker.draw_annotation(video_frames, tracks)
 
