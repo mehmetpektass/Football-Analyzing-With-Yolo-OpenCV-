@@ -51,7 +51,7 @@ Ensure you have the following dependencies installed before running the project:
 * Pandas
 
 ```bash
-git clone https://github.com/mehmetpektass/Football-Analyzing-With-Yolo-OpenCV-
+git clone https://github.com/mehmetpektass/Football-Analyzing-With-Yolo-OpenCV-.git
 
 ```
 ```
