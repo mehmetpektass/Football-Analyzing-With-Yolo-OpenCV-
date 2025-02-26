@@ -14,7 +14,7 @@ def main():
                              stub_path="stubs/track_stubs.pkl")
    
    # To crap an image of player(If you need one, you should run this code only once)
-   # crop_image_of_player(video_frames, tracks)
+   #crop_image_of_player(video_frames, tracks)
    
    output_video_frames = tracker.draw_annotation(video_frames, tracks)
 
