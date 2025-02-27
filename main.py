@@ -28,7 +28,7 @@ def main():
          tracks["players"][frame_num][player_id]["team"] = team
          tracks["players"][frame_num][player_id]["team_color"] = team_assigner.team_colors[team]
          
-   track["ball"] = tracker.interpolate_ball_positions(tracker["ball"])
+   tracks["ball"] = tracker.interpolate_ball_positions(tracks["ball"])
    
    output_video_frames = tracker.draw_annotation(video_frames, tracks)
 
