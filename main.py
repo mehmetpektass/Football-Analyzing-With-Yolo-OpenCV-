@@ -22,7 +22,7 @@ def main():
    
    
    for frame_num, player_track in enumerate(tracks["players"]):
-      for player_id, track in player_track.item():
+      for player_id, track in player_track.items():
          team = team_assigner.get_player_team(video_frames[frame_num], player_id, track["bbox"])
          
          tracks["players"][frame_num][player_id]["team"] = team
@@ -34,7 +34,7 @@ def main():
 
 
    #Save the video
-   save_frames = save_video(output_video_frames, "output_videos/output_video7.avi")
+   save_frames = save_video(output_video_frames, "output_videos/output_video15.avi")
     
 if __name__ == "__main__":
     main()  
