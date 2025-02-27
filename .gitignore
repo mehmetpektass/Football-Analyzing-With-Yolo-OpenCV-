@@ -6,3 +6,4 @@ yolo11m.pt
 training/football-players-detection-1/
 *.pt
 *.avi
+*mp4
