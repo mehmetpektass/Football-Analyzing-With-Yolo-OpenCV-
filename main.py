@@ -1,5 +1,6 @@
 from utils import save_video, read_video, crop_image_of_player
 from tracker import Tracker
+from player_ball_assigner import PlayerBallAssigner
 from team_assigner import TeamAssigner
 import cv2
 
@@ -29,6 +30,15 @@ def main():
          tracks["players"][frame_num][player_id]["team_color"] = team_assigner.team_colors[team]
          
    tracks["ball"] = tracker.interpolate_ball_positions(tracks["ball"])
+   
+   player_assigner = PlayerBallAssigner()
+   for frame_num, player_track in enumerate(tracks["player"]):
+      ball_bbox = tracks["ball"][frame_num][1]["bbox"]
+      assigned_player = player_assigner.assign_ball_to_player(player_track, ball_bbox)
+      
+      if assigned_player != -1:
+         tracks["players"][frame_num][assigned_player]["has_ball"] = True
+   
    
    output_video_frames = tracker.draw_annotation(video_frames, tracks)
 
