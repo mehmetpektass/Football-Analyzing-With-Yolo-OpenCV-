@@ -59,7 +59,7 @@ class TeamAssigner:
         
         if player_id == 82:
             team_id =1
-        elif player_id == 119:
+        elif player_id == 95:
             team_id =1
         elif player_id == 119:
             team_id =1
