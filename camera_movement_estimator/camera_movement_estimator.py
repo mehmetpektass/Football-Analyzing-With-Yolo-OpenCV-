@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import pickle
+import os
 from utils import measure_distance, measure_xy_distance
 
 class CameraMovementEstimator():
@@ -27,6 +28,10 @@ class CameraMovementEstimator():
         )
     
     def get_camera_movement(self,frames, read_from_stub=False, path_of_stub=None):
+        
+        if read_from_stub and path_of_stub is not None and os.path.exists(path_of_stub):
+            with open(path_of_stub, "rb") as f:
+                return pickle.load(f)
         
         camera_movement = [[0,0]*len(frames)]
         
