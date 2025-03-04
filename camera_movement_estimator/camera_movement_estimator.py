@@ -33,7 +33,7 @@ class CameraMovementEstimator():
             with open(path_of_stub, "rb") as f:
                 return pickle.load(f)
         
-        camera_movement = [[0,0]*len(frames)]
+        camera_movement = [[0,0]]*len(frames)
         
         old_gray = cv2.cvtColor(frames[0], cv2.COLOR_BGR2GRAY)
         old_features = cv2.goodFeaturesToTrack(old_gray,**self.features)
