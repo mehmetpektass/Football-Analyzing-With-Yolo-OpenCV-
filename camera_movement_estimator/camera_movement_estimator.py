@@ -11,10 +11,10 @@ class CameraMovementEstimator():
         first_frame_grayscale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         mask_features = np.zeros_like(first_frame_grayscale)
         mask_features[: , 0:20] = 1
-        mask_features[: , 900,1050] = 1
+        mask_features[: , 900:1050] = 1
         
         self.features = dict(
-            max_corners = 100,
+            maxCorners = 100,
             qualityLevel = 0.3,
             minDistance = 3,
             blockSize = 7,
@@ -39,16 +39,16 @@ class CameraMovementEstimator():
         old_features = cv2.goodFeaturesToTrack(old_gray,**self.features)
         
         for frame_num in range(1, len(frames)):
-            frame_gray = cv2.cvtColor(frames[frame_num], cv2.COLOR_BAYER_BGGR2GRAY)
-            new_features, _ , _ = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, old_features, None, self.lk_params)
+            frame_gray = cv2.cvtColor(frames[frame_num], cv2.COLOR_BGR2GRAY)
+            new_features, _ , _ = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, old_features, None, **self.lk_params)
             
             max_distance = 0
             camera_movement_x = 0
             camera_movement_y = 0
             
             for _, (new,old) in enumerate(zip(new_features, old_features)):
-                new_features_point = new.reval()
-                old_features_point = old.reval()
+                new_features_point = new.ravel()
+                old_features_point = old.ravel()
                 
                 distance = measure_distance(new_features_point, old_features_point)
                 

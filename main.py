@@ -1,5 +1,6 @@
 from utils import save_video, read_video, crop_image_of_player
 from tracker import Tracker
+from camera_movement_estimator import CameraMovementEstimator
 from player_ball_assigner import PlayerBallAssigner
 from team_assigner import TeamAssigner
 import numpy as np
@@ -15,6 +16,11 @@ def main():
    tracks = tracker.get_object_tracks(video_frames,
                              read_from_stub=True,
                              stub_path="stubs/track_stubs.pkl")
+   
+   camera_movement_estimator = CameraMovementEstimator(video_frames[0])
+   camera_movement_per_frames = camera_movement_estimator.get_camera_movement(video_frames,
+                                                 read_from_stub=True,
+                                                 path_of_stub="stubs/camera_movement_stubs.pkl")
    
    # To crap an image of player(If you need one, you should run this code only once)
    #crop_image_of_player(video_frames, tracks)
@@ -49,6 +55,8 @@ def main():
          
    
    output_video_frames = tracker.draw_annotation(video_frames, tracks, team_ball_control)
+   
+   output_video_frames = camera_movement_estimator.draw_camera_movement(output_video_frames, camera_movement_per_frames)
 
 
    #Save the video
