@@ -20,3 +20,15 @@ class PerspectiveTransformer():
         self.target_vertices = self.target_vertices.astype(np.float32)
         
         self.perspective_transformer = cv2.getPerspectiveTransform(self.pixel_vertices, self.target_vertices)
+        
+    
+    def transform_point(self, point):
+        p = (int(point[0]), int(point[1]))
+        is_inside = cv2.pointPolygonTest(self.pixel_vertices, p, None) >= 0
+        if is_inside is False:
+            return None
+        
+        reshaped_point = point.reshape(-1,1,2).aastype(np.float32)
+        transform_point = cv2.perspectiveTransform(reshaped_point, PerspectiveTransformer)
+        return transform_point.reshape(-1,2)
+    
