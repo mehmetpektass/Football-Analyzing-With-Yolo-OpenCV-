@@ -28,8 +28,8 @@ class PerspectiveTransformer():
         if is_inside is False:
             return None
         
-        reshaped_point = point.reshape(-1,1,2).aastype(np.float32)
-        transform_point = cv2.perspectiveTransform(reshaped_point, PerspectiveTransformer)
+        reshaped_point = point.reshape(-1,1,2).astype(np.float32)
+        transform_point = cv2.perspectiveTransform(reshaped_point, self.perspective_transformer)
         return transform_point.reshape(-1,2)
     
 
