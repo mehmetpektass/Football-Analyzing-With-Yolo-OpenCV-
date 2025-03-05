@@ -16,11 +16,13 @@ def main():
    tracks = tracker.get_object_tracks(video_frames,
                              read_from_stub=True,
                              stub_path="stubs/track_stubs.pkl")
+   tracker.add_position_to_tracks(tracks)
    
    camera_movement_estimator = CameraMovementEstimator(video_frames[0])
    camera_movement_per_frames = camera_movement_estimator.get_camera_movement(video_frames,
                                                  read_from_stub=True,
                                                  path_of_stub="stubs/camera_movement_stubs.pkl")
+   camera_movement_estimator.add_adjust_position_to_tracks(tracks,camera_movement_per_frames)
    
    # To crap an image of player(If you need one, you should run this code only once)
    #crop_image_of_player(video_frames, tracks)
@@ -60,7 +62,7 @@ def main():
 
 
    #Save the video
-   save_frames = save_video(output_video_frames, "output_videos/output_video22.avi")
+   save_frames = save_video(output_video_frames, "output_videos/output_video23.avi")
     
 if __name__ == "__main__":
     main()  

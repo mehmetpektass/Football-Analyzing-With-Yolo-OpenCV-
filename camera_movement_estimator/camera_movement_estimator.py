@@ -26,6 +26,17 @@ class CameraMovementEstimator():
             maxLevel = 2,
             criteria = (cv2.TERM_CRITERIA_EPS | cv2.TermCriteria_COUNT, 10, 0.03)        
         )
+        
+        
+    def add_adjust_position_to_tracks(self, tracks, camera_movement_per_frames):
+        for object, object_track in tracks.items():
+            for frame_num, track in enumerate(object_track):
+                for track_id, track_info in track.items():
+                    position = track_info["position"]
+                    camera_movement = camera_movement_per_frames[frame_num]
+                    adjusted_position = position[0] - camera_movement[0], position[1] - camera_movement[1]
+                    tracks[object][frame_num][track_id]["adjusted_position"] = adjusted_position 
+                            
     
     def get_camera_movement(self,frames, read_from_stub=False, path_of_stub=None):
         
