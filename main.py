@@ -3,6 +3,7 @@ from tracker import Tracker
 from camera_movement_estimator import CameraMovementEstimator
 from player_ball_assigner import PlayerBallAssigner
 from team_assigner import TeamAssigner
+from perspective_transformer import PerspectiveTransformer
 import numpy as np
 import cv2
 
@@ -23,6 +24,10 @@ def main():
                                                  read_from_stub=True,
                                                  path_of_stub="stubs/camera_movement_stubs.pkl")
    camera_movement_estimator.add_adjust_position_to_tracks(tracks,camera_movement_per_frames)
+   
+   
+   perspective_transformer = PerspectiveTransformer()
+   perspective_transformer.add_transformed_position_to_track(tracks)
    
    # To crap an image of player(If you need one, you should run this code only once)
    #crop_image_of_player(video_frames, tracks)

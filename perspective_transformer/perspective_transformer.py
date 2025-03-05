@@ -32,3 +32,15 @@ class PerspectiveTransformer():
         transform_point = cv2.perspectiveTransform(reshaped_point, PerspectiveTransformer)
         return transform_point.reshape(-1,2)
     
+
+    def add_transformed_position_to_track(self, tracks):
+        for object, object_track in tracks.items():
+            for frame_num, track in enumerate(object_track):
+                for track_id, track_info in track.items():
+                    position = track_info["adjusted_position"]
+                    position = np.array(position)
+                    position_transformed = self.transform_point(position)
+                    if position_transformed is not None:
+                        position_transformed = position_transformed.squeeze().tolist()
+                    tracks[object][frame_num][track_id]["transformed_position"] = position_transformed
+                        
