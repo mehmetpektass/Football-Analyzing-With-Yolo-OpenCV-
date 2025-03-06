@@ -1,3 +1,5 @@
+from utils import measure_distance
+
 class SpeedAndDistanceEstimator():
     def __init__(self):
         self.frame_windows = 5
@@ -19,3 +21,11 @@ class SpeedAndDistanceEstimator():
                     
                     start_position = object_tracks[first_frame_of_iteration][track_id]["adjusted_position"]
                     end_position = object_tracks[last_frame][track_id]["adjusted_position"]
+                    
+                    if start_position is None or end_position is None:
+                        continue
+                    
+                    covered_distance = measure_distance(start_position, end_position)
+                    time = (last_frame - first_frame_of_iteration) / self.frame_per_second
+                    speed_meteres_per_second = covered_distance/time
+                    speed_km_per_hour = speed_meteres_per_second *3.6
