@@ -4,6 +4,7 @@ from camera_movement_estimator import CameraMovementEstimator
 from player_ball_assigner import PlayerBallAssigner
 from team_assigner import TeamAssigner
 from perspective_transformer import PerspectiveTransformer
+from speed_and_distance_estimator import SpeedAndDistanceEstimator
 import numpy as np
 import cv2
 
@@ -31,6 +32,9 @@ def main():
    
    # To crap an image of player(If you need one, you should run this code only once)
    #crop_image_of_player(video_frames, tracks)
+   
+   speed_and_distance_estimator = SpeedAndDistanceEstimator()
+   speed_and_distance_estimator.add_speed_and_distance_to_tracks(tracks)
    
    team_assigner = TeamAssigner()
    team_assigner.assign_team_color(video_frames[0], tracks["players"][0])
@@ -64,6 +68,8 @@ def main():
    output_video_frames = tracker.draw_annotation(video_frames, tracks, team_ball_control)
    
    output_video_frames = camera_movement_estimator.draw_camera_movement(output_video_frames, camera_movement_per_frames)
+   
+   output_video_frames = speed_and_distance_estimator.draw_speed_and_distance(output_video_frames, tracks)
 
 
    #Save the video
