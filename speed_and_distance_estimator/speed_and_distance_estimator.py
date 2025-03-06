@@ -20,8 +20,8 @@ class SpeedAndDistanceEstimator():
                     if track_id not in object_track[last_frame]:
                         continue
                     
-                    start_position = object_track[first_frame_of_iteration][track_id]["adjusted_position"]
-                    end_position = object_track[last_frame][track_id]["adjusted_position"]
+                    start_position = object_track[first_frame_of_iteration][track_id]["transformed_position"]
+                    end_position = object_track[last_frame][track_id]["transformed_position"]
                     
                     if start_position is None or end_position is None:
                         continue
