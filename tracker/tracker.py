@@ -13,15 +13,15 @@ class Tracker:
         self.tracker = sv.ByteTrack()
         
     def add_position_to_tracks(self, tracks):
-        for object, object_track in tracks.items():
+        for obj, object_track in tracks.items():
             for frame_num, track in enumerate(object_track):
                 for track_id, track_info in track.items():
                     bbox = track_info["bbox"]
-                    if object == "ball":
+                    if obj == "ball":
                         position = get_center_of_bbox(bbox)
                     else:
                         position = get_foot_position(bbox)
-                    tracks[object][frame_num][track_id]["position"] = position   
+                    tracks[obj][frame_num][track_id]["position"] = position   
 
         
     def interpolate_ball_positions(self, ball_positions):

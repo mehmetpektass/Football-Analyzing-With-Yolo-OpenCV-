@@ -8,6 +8,12 @@ class CameraMovementEstimator():
     def __init__(self, frame):
         self.minimum_distance = 5
         
+        self.lk_params = dict(
+            winSize = (15,15),
+            maxLevel = 2,
+            criteria = (cv2.TERM_CRITERIA_EPS | cv2.TermCriteria_COUNT, 10, 0.03)        
+        )
+        
         first_frame_grayscale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         mask_features = np.zeros_like(first_frame_grayscale)
         mask_features[: , 0:20] = 1
@@ -21,21 +27,15 @@ class CameraMovementEstimator():
             mask = mask_features,           
         )
         
-        self.lk_params = dict(
-            winSize = (15,15),
-            maxLevel = 2,
-            criteria = (cv2.TERM_CRITERIA_EPS | cv2.TermCriteria_COUNT, 10, 0.03)        
-        )
-        
         
     def add_adjust_position_to_tracks(self, tracks, camera_movement_per_frames):
-        for object, object_track in tracks.items():
+        for obj, object_track in tracks.items():
             for frame_num, track in enumerate(object_track):
                 for track_id, track_info in track.items():
                     position = track_info["position"]
                     camera_movement = camera_movement_per_frames[frame_num]
                     adjusted_position = position[0] - camera_movement[0], position[1] - camera_movement[1]
-                    tracks[object][frame_num][track_id]["adjusted_position"] = adjusted_position 
+                    tracks[obj][frame_num][track_id]["adjusted_position"] = adjusted_position 
                             
     
     def get_camera_movement(self,frames, read_from_stub=False, path_of_stub=None):
@@ -44,7 +44,7 @@ class CameraMovementEstimator():
             with open(path_of_stub, "rb") as f:
                 return pickle.load(f)
         
-        camera_movement = [[0,0]]*len(frames)
+        camera_movement = [[0,0] for _ in range(len(frames))]
         
         old_gray = cv2.cvtColor(frames[0], cv2.COLOR_BGR2GRAY)
         old_features = cv2.goodFeaturesToTrack(old_gray,**self.features)
