@@ -29,3 +29,17 @@ class SpeedAndDistanceEstimator():
                     time = (last_frame - first_frame_of_iteration) / self.frame_per_second
                     speed_meteres_per_second = covered_distance/time
                     speed_km_per_hour = speed_meteres_per_second *3.6
+                    
+                    if object not in total_distance:
+                        total_distance[object] = {}
+                    if track_id not in total_distance:
+                        total_distance[object][track_id] = 0
+                    
+                    total_distance[object][track_id] =+ covered_distance
+                    
+                    for frame_num_batch in range(first_frame_of_iteration, last_frame):
+                        if track_id not in tracks[object][frame_num_batch]:
+                            continue
+                        
+                        tracks[object][frame_num_batch][track_id]["speed"] = speed_km_per_hour
+                        tracks[object][frame_num_batch][track_id]["distance"] = total_distance[object][track_id]
